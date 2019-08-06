@@ -7,10 +7,19 @@ const connection = mysql.createConnection({
     user: "root",
     password: "root",
     database: "bamazon"
-  });
-  
-  connection.connect(function(err) {
+});
+
+connection.connect(function (err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId + "\n");
-    createProduct();
-  });
+    displayInventory();
+});
+
+
+const displayInventory = () => {
+    console.log("Displaying all inventory...\n");
+    connection.query("SELECT * FROM products", function (err, res) {
+        if (err) throw err;
+        console.log(res);
+    });
+}
