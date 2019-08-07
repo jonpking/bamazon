@@ -11,15 +11,24 @@ const connection = mysql.createConnection({
 
 connection.connect(function (err) {
     if (err) throw err;
-    console.log("connected as id " + connection.threadId + "\n");
-    displayInventory();
 });
 
+console.log("Displaying all inventory...\n");
+connection.query("SELECT * FROM products", function (err, res) {
+    if (err) throw err;
+    console.log(res);
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "itemId",
+            message: "Enter the ID of the item you would like to purchase: "
+        },
+        {
+            type: "input",
+            name: "itemQuantity",
+            message: "Enter the quantity you would like to purchase: "
+        }
+    ]).then(function (results) {
 
-const displayInventory = () => {
-    console.log("Displaying all inventory...\n");
-    connection.query("SELECT * FROM products", function (err, res) {
-        if (err) throw err;
-        console.log(res);
     });
-}
+});
