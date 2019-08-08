@@ -33,13 +33,26 @@ connection.query("SELECT * FROM products", function (err, res) {
         connection.query("SELECT stock_quantity FROM products WHERE ?",
             {
                 item_id: results.itemId
-            }, function (error, response) {
-                if (error) throw error;
+            }, function (err2, res2) {
+                if (err2) throw err2;
                 // console.table(response);
-                if (response[0].stock_quantity <= 0) {
+                if (res2[0].stock_quantity <= 0) {
                     console.log("Not enough stock to process order\n");
                 } else {
                     console.log("Processing your order now...\n");
+                    connection.query("UPDATE products SET ? WHERE ?",
+                        [
+                            {
+                                stock_quantity: (res2[0].stock_quantity - results.itemQuantity)
+                            },
+                            {
+                                item_id: results.itemId
+                            }
+                        ], function (err3, res3) {
+                            if (err3) throw err3;
+                            console.log("Order processed successfully\n");
+                            //print total cost of order
+                        });
                 }
             });
     });
