@@ -30,7 +30,7 @@ connection.query("SELECT * FROM products", function (err, res) {
         }
     ]).then(function (results) {
         // console.log(res[0].item_id);
-        connection.query("SELECT stock_quantity FROM products WHERE ?",
+        connection.query("SELECT stock_quantity, price FROM products WHERE ?",
             {
                 item_id: results.itemId
             }, function (err2, res2) {
@@ -52,6 +52,7 @@ connection.query("SELECT * FROM products", function (err, res) {
                             if (err3) throw err3;
                             console.log("Order processed successfully\n");
                             //print total cost of order
+                            console.log("Total order cost: " + (results.itemQuantity * res2[0].price));
                         });
                 }
             });
