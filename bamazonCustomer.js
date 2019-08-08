@@ -29,6 +29,18 @@ connection.query("SELECT * FROM products", function (err, res) {
             message: "Enter the quantity you would like to purchase: "
         }
     ]).then(function (results) {
-
+        // console.log(res[0].item_id);
+        connection.query("SELECT stock_quantity FROM products WHERE ?",
+            {
+                item_id: results.itemId
+            }, function (error, response) {
+                if (error) throw error;
+                // console.table(response);
+                if (response[0].stock_quantity <= 0) {
+                    console.log("Not enough stock to process order\n");
+                } else {
+                    console.log("Processing your order now...\n");
+                }
+            });
     });
 });
