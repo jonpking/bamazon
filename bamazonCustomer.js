@@ -16,7 +16,7 @@ connection.connect(function (err) {
 console.log("Displaying all inventory...\n");
 connection.query("SELECT * FROM products", function (err, res) {
     if (err) throw err;
-    console.log(res);
+    console.table(res);
     inquirer.prompt([
         {
             type: "input",
