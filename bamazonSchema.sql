@@ -19,3 +19,7 @@ insert into products(product_name, department_name, price, stock_quantity)
     ("Overpriced Writing Implement", "Stationary", 2, 75),
     ("Funky Notebook", "Stationary", 5, 60);
 select * from products;
+select stock_quantity from products where item_id = 100;
+insert into products(product_name, department_name, price, stock_quantity)
+	values("Test Product", "Test", 2, 0);
+update products set stock_quantity = 500 where item_id=110;
